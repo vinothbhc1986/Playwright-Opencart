@@ -276,18 +276,8 @@ npx playwright test
 The framework uses a `.env` file for all configurable settings. Copy `.env.example` to `.env` and update the values:
 
 ```env
-# Environment
-APP_ENV=qa                          # qa | prod | dev
-
 # Web Application
 WEB_APP_URL=https://awesomeqa.com/ui/
-APP_EMAIL=your-email@example.com
-APP_PASSWORD=your-password
-
-# Product Details (for cart tests)
-PRODUCT_NAME=MacBook
-PRODUCT_QUANTITY=1
-TOTAL_PRICE=$602.00
 
 # API (FakeStoreAPI)
 API_BASE_URL=https://fakestoreapi.com
@@ -299,18 +289,6 @@ CART_ID=1
 LIMIT=3
 START_DATE=2019-12-10
 END_DATE=2020-10-10
-
-# Database (MySQL)
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=your-db-password
-DB_NAME=opencart
-
-# Admin Portal
-ADMIN_URL=http://localhost/opencart/upload/admin/index.php
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=admin123
 ```
 
 ---
