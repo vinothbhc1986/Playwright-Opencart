@@ -57,7 +57,7 @@ It is designed for **CI/CD integration** (Jenkins + Docker), supports **multiple
 - ✅ **Custom Test Fixtures** — Type-safe dependency injection for all page objects
 - ✅ **Multi-Layer Testing** — Web UI + REST API + Database in a single framework
 - ✅ **Tag-Based Test Suites** — `@sanity`, `@regression`, `@api`, `@web`, `@e2e`, `@master`, `@datadriven`
-- ✅ **Data-Driven Testing** — CSV, JSON, and Excel test data sources
+- ✅ **Data-Driven Testing** — JSON test data sources
 - ✅ **Random Test Data Generation** — Powered by Faker.js
 - ✅ **Schema Validation** — JSON Schema validation for API responses via AJV
 - ✅ **Accessibility Checks** — WCAG compliance testing via axe-core
@@ -100,7 +100,7 @@ flowchart TB
 
     subgraph Utils["🔧 Utility Layer"]
         DG["dataGenerator.ts<br/>Faker.js random data"]
-        DR["DataReader.ts<br/>CSV / JSON / Excel"]
+        DR["DataReader.ts<br/>JSON data reader"]
         HLP["helper.ts<br/>Price conversion,<br/>test data helpers"]
         DB["dbClient.ts<br/>MySQL queries"]
         CR["CustomReporter.ts<br/>Custom HTML dashboard"]
@@ -112,9 +112,7 @@ flowchart TB
     end
 
     subgraph Data["📁 Test Data"]
-        CSV["opencart_logindata.csv"]
         JSON["opencart_logindata.json"]
-        XLSX["opencart_logindata.xlsx"]
     end
 
     subgraph Reports["📊 Reporting Layer"]
@@ -170,9 +168,7 @@ graph TD
     TEST --> API_T["tests/api/<br/>8 API test specs"]
     TEST --> DB_T["tests/db/<br/>1 E2E DB spec"]
 
-    DATA --> CSV["*.csv"]
     DATA --> JSON["*.json"]
-    DATA --> XLSX["*.xlsx"]
 
     REPORTS --> HTML["reports/"]
     REPORTS --> ALLURE["allure-results/"]
@@ -198,7 +194,7 @@ graph TD
 | `api/endpoints/`  | Centralized API route definitions                                       |
 | `api/schemas/`    | JSON Schema files for API response validation                           |
 | `utils/`          | Shared utilities (data generation, readers, DB client, custom reporter) |
-| `testdata/`       | External test data files (CSV, JSON, Excel)                             |
+| `testdata/`       | External test data files (JSON)                                         |
 | `reports/`        | Generated HTML + JUnit reports                                          |
 | `allure-results/` | Allure-compatible test result files                                     |
 | `custom-report/`  | Custom HTML dashboard output                                            |
@@ -221,8 +217,6 @@ graph TD
 | [axe-core](https://www.npmjs.com/package/@axe-core/playwright)       | ^4.13.0 | Accessibility (WCAG) testing     |
 | [Luxon](https://moment.github.io/luxon/)                             | ^3.7.2  | Date/time manipulation           |
 | [MySQL2](https://www.npmjs.com/package/mysql2)                       | ^3.23.3 | MySQL database connectivity      |
-| [csv-parse](https://www.npmjs.com/package/csv-parse)                 | ^7.0.2  | CSV file parsing                 |
-| [xlsx](https://www.npmjs.com/package/xlsx)                           | ^0.18.5 | Excel file parsing               |
 | [dotenv](https://www.npmjs.com/package/dotenv)                       | ^17.4.2 | Environment variable management  |
 
 ---
@@ -693,13 +687,11 @@ expect(rows[0].firstname).toBe(firstName);
 
 ## 📊 Data-Driven Testing
 
-The framework supports **three external data formats** for data-driven tests:
+The framework supports **JSON external data files** for data-driven tests:
 
-| Format    | Reader                     | File Example                       |
-| --------- | -------------------------- | ---------------------------------- |
-| **CSV**   | `DataProvider.readCsv()`   | `testdata/opencart_logindata.csv`  |
-| **JSON**  | `DataProvider.readJson()`  | `testdata/opencart_logindata.json` |
-| **Excel** | `DataProvider.readExcel()` | `testdata/opencart_logindata.xlsx` |
+| Format   | Reader                    | File Example                       |
+| -------- | ------------------------- | ---------------------------------- |
+| **JSON** | `DataProvider.readJson()` | `testdata/opencart_logindata.json` |
 
 ### Data Reader Utility
 
@@ -707,12 +699,6 @@ The framework supports **three external data formats** for data-driven tests:
 // utils/DataReader.ts
 export class DataProvider {
   static readJson(filePath: string) {
-    /* ... */
-  }
-  static readCsv(filePath: string) {
-    /* ... */
-  }
-  static readExcel(filePath: string) {
     /* ... */
   }
 }
@@ -898,7 +884,7 @@ flowchart LR
 | Utility          | File                      | Purpose                                                                 |
 | ---------------- | ------------------------- | ----------------------------------------------------------------------- |
 | `RandomDataUtil` | `utils/dataGenerator.ts`  | Generate random names, emails, passwords, addresses, dates via Faker.js |
-| `DataProvider`   | `utils/DataReader.ts`     | Read test data from CSV, JSON, and Excel files                          |
+| `DataProvider`   | `utils/DataReader.ts`     | Read test data from JSON files                                          |
 | `Helper`         | `utils/helper.ts`         | Price string-to-number conversion, static test data helpers             |
 | `executeQuery`   | `utils/dbClient.ts`       | Execute MySQL queries with parameterized inputs                         |
 | `CustomReporter` | `utils/CustomReporter.ts` | Custom Playwright reporter generating a rich HTML dashboard             |

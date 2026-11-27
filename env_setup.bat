@@ -8,7 +8,7 @@ call npm install dotenv @faker-js/faker luxon
 if errorlevel 1 goto :error
 
 echo [2/7] Installing API / data validation...
-call npm install ajv csv-parse xlsx
+call npm install ajv
 if errorlevel 1 goto :error
 
 echo [3/7] Installing accessibility testing (WCAG)...
