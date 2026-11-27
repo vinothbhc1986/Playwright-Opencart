@@ -10,13 +10,10 @@ import { LogoutPage } from '../pages/LogoutPage';
 import { SearchResultsPage } from '../pages/SearchResultsPage';
 import { ProductPage } from '../pages/ProductPage';
 import { CartPage } from '../pages/CartPage';
-import { AdminLoginPage } from '../pages/AdminLoginPage';
-import { AdminCustomersPage } from '../pages/AdminCustomersPage';
-import { AdminCustomerEditPage } from '../pages/AdminCustomerEditPage';
 
 dotenv.config();
 
-const APP_URL = process.env.WEB_APP_URL || 'http://localhost/opencart/upload/';
+const APP_URL = process.env.WEB_APP_URL || 'https://awesomeqa.com/ui/';
 
 type PageFixtures = {
     homePage: HomePage;
@@ -28,9 +25,6 @@ type PageFixtures = {
     searchResultsPage: SearchResultsPage;
     productPage: ProductPage;
     cartPage: CartPage;
-    adminLoginPage: AdminLoginPage;
-    adminCustomersPage: AdminCustomersPage;
-    adminCustomerEditPage: AdminCustomerEditPage;
 };
 
 export const test = base.extend<PageFixtures>({
@@ -61,15 +55,6 @@ export const test = base.extend<PageFixtures>({
     },
     cartPage: async ({ page }, use) => {
         await use(new CartPage(page));
-    },
-    adminLoginPage: async ({ page }, use) => {
-        await use(new AdminLoginPage(page));
-    },
-    adminCustomersPage: async ({ page }, use) => {
-        await use(new AdminCustomersPage(page));
-    },
-    adminCustomerEditPage: async ({ page }, use) => {
-        await use(new AdminCustomerEditPage(page));
     },
 });
 

@@ -30,7 +30,7 @@ test('End-to-End Shopping Flow @master @e2e @web', async ({ homePage, registerPa
     const { productName, productQuantity, totalPrice } = Helper.getProductDetails();
 
     await test.step('1) Open the application', async () => {
-        await homePage.navigateTo(process.env.WEB_APP_URL || 'http://localhost/opencart/upload/');
+        await homePage.navigateTo(process.env.WEB_APP_URL || 'https://awesomeqa.com/ui/');
     });
 
     await test.step('2) Register a new customer', async () => {
@@ -64,7 +64,7 @@ test('End-to-End Shopping Flow @master @e2e @web', async ({ homePage, registerPa
     });
 
     await test.step('7) Search for a known product', async () => {
-        await homePage.navigateTo(process.env.WEB_APP_URL || 'http://localhost/opencart/upload/');
+        await homePage.navigateTo(process.env.WEB_APP_URL || 'https://awesomeqa.com/ui/');
         await homePage.searchProduct(productName);
     });
 
